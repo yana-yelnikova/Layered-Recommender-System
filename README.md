@@ -31,7 +31,7 @@ To improve performance and streamline the analysis, our team decided to implemen
 
 This architectural approach moved heavy data processing from Python into the database, making the final analytical scripts significantly faster and easier to maintain.
 
-➡️ **The SQL scripts I developed for creating these tables can be found in the `database_scripts/` directory.**
+➡️ **The SQL scripts I developed for creating these tables, along with a detailed README explaining each script, can be found in the [`database_scripts/`](database_scripts/) directory.**
 
 ### 3. Tag Taxonomy Design
 
