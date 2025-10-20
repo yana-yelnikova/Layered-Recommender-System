@@ -20,9 +20,9 @@ To account for significant differences in the population of the districts, a nor
 * **Average Population:** The average population across all districts was determined.
 * **Coefficient Assignment:** Each district was assigned a `population_coefficient` based on the following formula:
 
-    $$
-    \text{Coefficient}_{\text{population}} = \frac{\text{Population}_{\text{district}}}{\text{Population}_{\text{average}}}
-    $$
+$$
+\text{Coefficient}_{\text{population}} = \frac{\text{Population}_{\text{district}}}{\text{Population}_{\text{average}}}
+$$
 
 This coefficient represents how much more or less populous a district is compared to the average. It is used to create a scaled, fair threshold for evaluating metrics on a per-capita basis (e.g., the number of sports facilities per resident).
 
