@@ -2,7 +2,6 @@
 
 This directory contains the SQL scripts responsible for creating and populating the core analytical tables in the database. These tables are designed to pre-calculate and aggregate data, which significantly improves the performance and simplifies the logic of the downstream Python labeling scripts.
 
-The scripts should be run in the order presented below.
 
 ---
 ## 1. `district_attributes.sql`
