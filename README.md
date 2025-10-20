@@ -41,14 +41,18 @@ The focus of the design was to ensure each tag is **objective, data-driven, and 
 
 ➡️ **The complete list of all tags within each category, along with their detailed descriptions, data sources, and calculation logic, can be found in the [Tag Taxonomy Document](common_labels/README.md).**
 
+
 ### 4. Data-Driven Tagging Logic
 
-I developed the core analytical methodology for assigning the tags defined in the taxonomy. Key aspects include:
-* Using a **normalization coefficient** based on district area to ensure fair, size-adjusted comparisons.
-* Implementing this methodology to generate hierarchical tags for key categories like **Mobility** (transport hubs) and **Amenities** (convenience, shopping).
-* Automating the process with Python scripts that calculate and upload the final tags to the database.
+I developed the core analytical methodology for assigning the objective, data-driven tags defined in the taxonomy. Key aspects of this implemented methodology include:
 
-➡️ **For a detailed description of all tags and their logic, see the [Tag Taxonomy Document](common_labels/README.md).**
+* **Normalization using Coefficients:** Utilizing an `Area Coefficient` to ensure fair, size-adjusted comparisons via scaled thresholds (e.g., `Actual Count > Average Count × Coefficient`).
+* **Hierarchical Tagging:** Implementing clear hierarchies to prevent redundancy, such as in the **`Mobility`** category where the top-tier `#public_transport_hub` tag supersedes more specific hub tags.
+* **Scoring Systems & Composite Tags:** Employing scoring systems, for example in the **`Amenities & Services`** category, where scores based on core services (banks, post offices, supermarkets) lead to hierarchically assigned composite tags like `#commercial_hotspot` (Score 3 + Mall Hub) or `#daily_convenience` (Score 2).
+* **Independent Tags:** Defining standalone tags based on specific criteria, such as the `#shopping_destination` tag which uses a stricter, independent rule based solely on mall concentration.
+* **Automation & Efficiency:** Automating the entire tagging process using Python scripts. These scripts read pre-aggregated data from central database tables (`district_features`, `district_attributes`), apply the defined logic, and upload the final tags to the `district_labels_new` table.
+
+➡️ **For a detailed step-by-step description of the implemented logic for each category, see the [Labels README](labels/README.md).**
 
 ---
 ## Technologies Used
