@@ -1,8 +1,10 @@
--- First, drop the table if it already exists to avoid errors on re-run
-DROP TABLE IF EXISTS berlin_source_data.district_attributes_test;
+-- 1. Switch to the team role. All subsequent commands will be executed as 'data_team'.
+SET ROLE data_team;
+-- 2. Drop the old table. As we are now 'data_team', we have the necessary permissions.
+DROP TABLE IF EXISTS berlin_labels.district_attributes;
 
--- Create the new table 'district_attributes' based on the result of a complex query
-CREATE TABLE berlin_source_data.district_attributes_test AS (
+-- 3. Create the new table 'district_attributes' based on the result of a complex query
+CREATE TABLE berlin_labels.district_attributes AS (
     -- Use a CTE (Common Table Expression) for readability
     WITH district_areas AS (
         SELECT
@@ -41,10 +43,13 @@ CREATE TABLE berlin_source_data.district_attributes_test AS (
 -- Add a foreign key constraint to ensure data integrity.
 -- This creates a formal link to the main 'districts' table,
 -- guaranteeing that every 'district_id' in this table must also exist in the 'districts' table.
-ALTER TABLE berlin_source_data.district_attributes
+ALTER TABLE berlin_labels.district_attributes
 ADD CONSTRAINT fk_district
 FOREIGN KEY (district_id)
 REFERENCES berlin_source_data.districts (district_id);
 
--- Check that the table was created successfully
-SELECT * FROM berlin_source_data.district_attributes_test;
+-- 4. Revert to the original user role.
+RESET ROLE;
+
+-- 5.Check that the table was created successfully
+SELECT * FROM berlin_labels.district_attributes;
