@@ -37,7 +37,9 @@ This architectural approach moved heavy data processing from Python into the dat
 
 A comprehensive tag taxonomy was designed and developed for this project, creating a structured classification system with five key categories: `Economy & Real Estate`, `Community & Lifestyle`, `Green & Environment`, `Mobility`, and `Amenities & Services`.
 
-The focus of the design was to ensure each tag is **objective, data-driven, and transparent**, clearly reflecting the metric used for its calculation. The system includes simple, direct metrics as well as more complex **hierarchical and composite tags** (e.g., `#commercial_hotspot`, `#peak_wellbeing`) to provide a nuanced district profile.
+The focus of the design was to ensure each tag is **objective, data-driven, and transparent**, clearly reflecting the metric used for its calculation. The system includes simple, direct metrics as well as more complex **hierarchical and composite tags** (e.g., `#commercial_hotspot`, `#public_transport_hub`) to provide a nuanced district profile.
+
+➡️ **The complete list of all tags within each category, along with their detailed descriptions, data sources, and calculation logic, can be found in the [Tag Taxonomy Document](common_labels/README.md).**
 
 ### 4. Data-Driven Tagging Logic
 
