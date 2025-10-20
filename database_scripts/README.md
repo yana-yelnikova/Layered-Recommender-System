@@ -1,51 +1,43 @@
-### 1. Area Coefficient Calculation
+# Analytical Database Schema Scripts
 
-To account for significant differences in the geographical size of the districts, a normalization coefficient was calculated.
+This directory contains the SQL scripts responsible for creating and populating the core analytical tables in the database. These tables are designed to pre-calculate and aggregate data, which significantly improves the performance and simplifies the logic of the downstream Python labeling scripts.
 
-1.  **Area Calculation**: The area of each district was calculated in square kilometers (km²) using its geospatial data.
-2.  **Average Area**: The average area of all districts was determined.
-3.  **Coefficient Assignment**: Each district was assigned an `area_coefficient` based on the following formula:
+The scripts should be run in the order presented below.
 
-    $$
-    \text{Coefficient}_{\text{district}} = \frac{\text{Area}_{\text{district}}}{\text{Area}_{\text{average}}}
-    $$
+---
+## 1. `creating_district_attributes.sql`
 
-This coefficient represents how much larger or smaller a district is compared to the average. It is used to create a scaled, fair threshold for evaluating metrics like the number of transport stops.
+This script is responsible for creating the **`berlin_source_data.district_attributes`** table.
 
-### 2. Population Coefficient Calculation
+The purpose of this table is to store pre-calculated, static metrics for each district, eliminating the need for repeated, expensive calculations. It contains the following key metrics:
 
-To account for significant differences in the population of the districts, a normalization coefficient was calculated.
+* **`area_sq_km` and `area_coefficient`**: The absolute area and a normalized coefficient to account for significant differences in the geographical size of the districts.
+* **`inhabitants` and `population_coefficient`**: The total population and a normalized coefficient to account for differences in population size.
 
-* **Population Count:** The number of inhabitants for each district was sourced from the database.
-* **Average Population:** The average population across all districts was determined.
-* **Coefficient Assignment:** Each district was assigned a `population_coefficient` based on the following formula:
+These coefficients are fundamental for the fair, scaled comparisons used in the tagging logic.
 
-$$
-\text{Coefficient}_{\text{population}} = \frac{\text{Population}_{\text{district}}}{\text{Population}_{\text{average}}}
-$$
+#### Area Coefficient Calculation
+The `area_coefficient` is calculated based on the following formula:
+`Coefficient_district = Area_district / Area_average`
 
-This coefficient represents how much more or less populous a district is compared to the average. It is used to create a scaled, fair threshold for evaluating metrics on a per-capita basis (e.g., the number of sports facilities per resident).
+#### Population Coefficient Calculation
+The `population_coefficient` is calculated based on the following formula:
+`Coefficient_population = Population_district / Population_average`
 
+---
+## 2. `creating_district_features.sql`
 
-#### Database Implementation
-To optimize performance, these calculations of area coefficient are performed directly in the database using PostGIS. The SQL script used to create and populate the table is located at `features/creating_district_attributes.sql`. The results are stored in a persistent table named **`berlin_source_data.district_attributes`**, which contains the `district_id`, `area_sq_km`, and `area_coefficient`, `inhabitants` and `population_coefficient` eliminating the need for repeated calculations.
+This script is responsible for creating the central "feature table" at **`berlin_labels.district_features`**.
 
-### 3. Centralized Feature Table
-
-To streamline the labeling process and improve performance, a centralized feature table has been created at **`berlin_labels.district_features`**.
-
-This table contains pre-aggregated data for each district (e.g., the total count of bus stops, banks, etc.), eliminating the need for each script to perform these calculations on the fly. All labeling scripts should now source their data from this single, efficient table.
+This table serves as the single source of truth for all pre-aggregated data needed by the Python labeling scripts. It contains a wide format with one row per district and columns representing the total count of various amenities (e.g., `bus_tram_stop_count`, `bank_count`, `num_gyms`, etc.). This approach moves heavy data processing from Python into the database, making the analytical scripts significantly faster.
 
 ### How to Contribute
 
-If your tagging logic requires a new, calculated metric (like the count of kindergartens or the total length of bike lanes), you must **add the corresponding column to this central feature table**. Please update the main SQL script responsible for creating this table to include your new feature. This ensures that all calculated data is available in one consistent location for the entire project.
+If your tagging logic requires a new, calculated metric (like the count of kindergartens), you must **add the corresponding column to this central feature table**. Please update this main SQL script to include your new feature. This ensures that all calculated data is available in one consistent location for the entire project.
 
-The script for creating and populating this table can be found at: `features/creating_district_features.sql`
+---
+## 3. `creating_district_labels_new.sql`
 
-### 4. Final Tag Table
+This script is responsible for creating the final output table at **`berlin_labels.district_labels_new`**.
 
-To store the final output of the labeling scripts, a dedicated table has been created at **`berlin_labels.district_labels_new`**.
-
-This table has a standardized structure (`district_id`, `category`, `label`) and is designed to aggregate the results from all individual analysis scripts. A primary key on `(district_id, label)` prevents duplicate entries, and a foreign key links `district_id` to the main `districts` table to ensure data integrity.
-
-The SQL script used to create this table is located at `features/creating_district_labels_new.sql`. Individual scripts should now be configured to append their results to this central table.
+This table is designed to store the results from all individual Python labeling scripts. It uses a standardized "long" format (`district_id`, `category`, `label`) which is highly scalable. The table includes a primary key to prevent duplicate entries and a foreign key to the main `districts` table to ensure data integrity. Individual Python scripts should be configured to append their results to this central table.
