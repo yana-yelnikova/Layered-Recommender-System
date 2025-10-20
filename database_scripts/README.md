@@ -14,6 +14,18 @@ This coefficient represents how much larger or smaller a district is compared to
 
 ### 2. Population Coefficient Calculation
 
+To account for significant differences in the population of the districts, a normalization coefficient was calculated.
+
+* **Population Count:** The number of inhabitants for each district was sourced from the database.
+* **Average Population:** The average population across all districts was determined.
+* **Coefficient Assignment:** Each district was assigned a `population_coefficient` based on the following formula:
+
+    $$
+    \text{Coefficient}_{\text{population}} = \frac{\text{Population}_{\text{district}}}{\text{Population}_{\text{average}}}
+    $$
+
+This coefficient represents how much more or less populous a district is compared to the average. It is used to create a scaled, fair threshold for evaluating metrics on a per-capita basis (e.g., the number of sports facilities per resident).
+
 
 #### Database Implementation
 To optimize performance, these calculations of area coefficient are performed directly in the database using PostGIS. The SQL script used to create and populate the table is located at `features/creating_district_attributes.sql`. The results are stored in a persistent table named **`berlin_source_data.district_attributes`**, which contains the `district_id`, `area_sq_km`, and `area_coefficient`, `inhabitants` and `population_coefficient` eliminating the need for repeated calculations.
