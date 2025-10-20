@@ -44,15 +44,17 @@ The focus of the design was to ensure each tag is **objective, data-driven, and 
 
 ### 4. Data-Driven Tagging Logic
 
-I developed the core analytical methodology for assigning the objective, data-driven tags defined in the taxonomy. Key aspects of this implemented methodology include:
+I developed the core analytical methodology for assigning the objective, data-driven tags defined in the taxonomy. My approach was focused on creating a robust, transparent, and automated system. The key pillars of this methodology are:
 
-* **Normalization using Coefficients:** Utilizing an `Area Coefficient` to ensure fair, size-adjusted comparisons via scaled thresholds (e.g., `Actual Count > Average Count × Coefficient`).
-* **Hierarchical Tagging:** Implementing clear hierarchies to prevent redundancy, such as in the **`Mobility`** category where the top-tier `#public_transport_hub` tag supersedes more specific hub tags.
-* **Scoring Systems & Composite Tags:** Employing scoring systems, for example in the **`Amenities & Services`** category, where scores based on core services (banks, post offices, supermarkets) lead to hierarchically assigned composite tags like `#commercial_hotspot` (Score 3 + Mall Hub) or `#daily_convenience` (Score 2).
-* **Independent Tags:** Defining standalone tags based on specific criteria, such as the `#shopping_destination` tag which uses a stricter, independent rule based solely on mall concentration.
-* **Automation & Efficiency:** Automating the entire tagging process using Python scripts. These scripts read pre-aggregated data from central database tables (`district_features`, `district_attributes`), apply the defined logic, and upload the final tags to the `district_labels_new` table.
+* **Normalization for Fair Comparisons:** I implemented a system using **Area and Population Coefficients** to create scaled thresholds, ensuring that districts of different sizes are compared fairly.
 
-➡️ **For a detailed step-by-step description of the implemented logic for each category, see the [Labels README](labels/README.md).**
+* **Advanced Tagging Models:** Instead of simple one-to-one rules, I designed and implemented more complex logic, including:
+    * **Hierarchical Tagging** (e.g., for the `Mobility` category) to assign the single most accurate tag and avoid redundancy.
+    * **Scoring Systems and Composite Tags** (e.g., for `Amenities & Services`) to create nuanced, high-level tags like `#commercial_hotspot` based on multiple underlying criteria.
+
+* **Automation and Efficiency:** I automated the entire process using Python scripts. These scripts efficiently read pre-aggregated data from the central database tables, apply the defined logic, and upload the final tags to the `district_labels_new` table.
+
+➡️ **A detailed, step-by-step breakdown of the implemented logic for each category is available in the [Labels README](labels/README.md).**
 
 ---
 ## Technologies Used
