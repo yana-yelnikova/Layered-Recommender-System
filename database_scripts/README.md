@@ -5,7 +5,7 @@ This directory contains the SQL scripts responsible for creating and populating 
 The scripts should be run in the order presented below.
 
 ---
-## 1. `creating_district_attributes.sql`
+## 1. `district_attributes.sql`
 
 This script is responsible for creating the **`berlin_labels.district_attributes`** table.
 
@@ -25,7 +25,7 @@ The `population_coefficient` is calculated based on the following formula:
 `Coefficient_population = Population_district / Population_average`
 
 ---
-## 2. `creating_district_features.sql`
+## 2. `district_features.sql`
 
 This script is responsible for creating the central "feature table" at **`berlin_labels.district_features`**.
 
