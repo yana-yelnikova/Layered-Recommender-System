@@ -9,7 +9,7 @@ All tags discussed in this section (`#public_transport_hub`, `#bus_tram_hub`, `#
 2.  **Tagging Hierarchy**: To avoid redundancy, the following hierarchy will be applied:
     * **`#public_transport_hub`**: Assigned only if a district meets the hub criteria for **both** bus/tram **AND** U-Bahn networks.
     * **`#bus_tram_hub` / `#uban_hub`**: These more specific tags are assigned only if a district qualifies as a hub for one transport type, but not both. A district tagged as `#public_transport_hub` will not receive these secondary tags.
-3. **Current Implementation Status**: The script at `labels-yelnikova/script_transport_full.ipynb` now fully implements the hub identification rule and the final tagging hierarchy. The resulting tags are formatted and appended to the central **`berlin_labels.district_labels_new`** table.
+3. **Current Implementation Status**: The script `script_transport_full.ipynb` now fully implements the hub identification rule and the final tagging hierarchy. The resulting tags are formatted and appended to the central **`berlin_labels.district_labels_new`** table.
 
 ### 2. Accessibility Tagging Logic
 
@@ -22,7 +22,7 @@ This logic evaluates the convenience of a district for everyday life based on a 
     * **`#highly_convenient` (Score: 3)**: Assigned to districts that score 3/3 on core amenities but are **not** mall hubs.
     * **`#daily_convenience` (Score: 2)**: Assigned to districts that score 2/3 on core amenities.
 
-**Current Implementation Status**: The script at `labels-yelnikova/script_accesebility_full.ipynb` fully implements this logic. The resulting tags are formatted and appended to the central **`berlin_labels.district_labels_new`** table.
+**Current Implementation Status**: The script `script_accesebility_full.ipynb` fully implements this logic. The resulting tags are formatted and appended to the central **`berlin_labels.district_labels_new`** table.
 
 ### 3. Shopping Destination Tag Logic
 
@@ -33,5 +33,5 @@ This is an **independent tag** designed to specifically identify major shopping 
 
 * **Tag Assignment**: If the condition is met, the district receives the **`#shopping_destination`** tag. This tag can be assigned in addition to any other amenity tags a district may have.
 
-**Current Implementation Status**: The script at `labels-yelnikova/script_accesebility_full.ipynb` fully implements this logic. The resulting tag is formatted and appended to the central **`berlin_labels.district_labels_new`** table.
+**Current Implementation Status**: The script `script_accesebility_full.ipynb` fully implements this logic. The resulting tag is formatted and appended to the central **`berlin_labels.district_labels_new`** table.
 
