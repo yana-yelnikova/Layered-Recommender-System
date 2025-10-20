@@ -7,7 +7,7 @@ The scripts should be run in the order presented below.
 ---
 ## 1. `creating_district_attributes.sql`
 
-This script is responsible for creating the **`berlin_source_data.district_attributes`** table.
+This script is responsible for creating the **`berlin_labels.district_attributes`** table.
 
 The purpose of this table is to store pre-calculated, static metrics for each district, eliminating the need for repeated, expensive calculations. It contains the following key metrics:
 
