@@ -14,6 +14,7 @@ The pipeline is broken down into four main stages, executed by separate Jupyter 
 * Fetches all `amenity=doctors` and `amenity=clinic` objects within the Berlin boundary.
 * **Note:** The query returns raw **Overpass JSON** (not GeoJSON).
 * Saves the raw JSON response as `source/doctors_and_clinics_raw.geojson`.
+* For a detailed breakdown of the data source, fields, and acquisition method, see the [`Data Source README`](source/README.md).**
 
 ### 2. Clean (Primary Cleaning & Enrichment)
 
