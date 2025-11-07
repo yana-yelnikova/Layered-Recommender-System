@@ -22,7 +22,8 @@ This project outlines the end-to-end pipeline for processing, cleaning, enrichin
 >     │   ├── post_offices_data_transformation.ipynb
 >     │   ├── upload_to_database.ipynb
 >     │   ├── upload_to_test_database.ipynb
->     │   └── lor_ortsteile.geojson
+>     │   ├── lor_ortsteile.geojson
+>     │   └── README.md
 >     └── sources/
 >         ├── deutschepost_final_data_raw.csv
 >         ├── deutschepost_raw.csv
@@ -70,24 +71,23 @@ This stage augments the location data with geographical context by adding unique
 The final stage of the pipeline loads the cleaned and enriched dataset into the local PostgreSQL database (`layereddb`) and performs a comprehensive series of validation checks.
 
 * **Database Connection:** A connection is established to the local database using SQLAlchemy.
-
-* **Table Creation:** The script first ensures a clean slate by executing a `DROP TABLE IF EXISTS` followed by a `CREATE TABLE` statement. This makes the script self-contained and guarantees that the `berlin_source_data.post_offices` table has the correct, up-to-date schema every time it runs.
-
-* **Data Preparation:** Before loading, the pandas DataFrame's columns are explicitly reordered to match the SQL table schema, preventing any column mismatch errors.
-
-* **High-Performance Data Loading:** To ensure efficiency, data is loaded using PostgreSQL's high-performance **`COPY` command** via `psycopg2`'s `copy_expert` method. This is significantly faster for larger datasets than row-by-row insertion.
-
-* **Post-Load Constraint Application:** To speed up the bulk data loading process, constraints are applied *after* the data has been copied into the table.
-    * A **Foreign Key** constraint is added to link `district_id` to the main `districts` table.
-    * **`NOT NULL` constraints** are applied to several columns to enforce data integrity.
-
-* **Comprehensive Data Validation:** After loading, the script executes a series of SQL queries directly against the database to validate the integrity and quality of the loaded data. These checks include:
-    * Verifying the total **row count**.
-    * Ensuring the **primary key** (`id`) is unique.
-    * Checking for **geospatial outliers** by ensuring all coordinates fall within Berlin's expected boundaries.
-    * Confirming **referential integrity** by ensuring all `district_id` values in the `post_offices` table exist in the reference `districts` table.
+* **Table Creation:** The script first ensures a clean slate by executing a `DROP TABLE IF EXISTS` followed by a `CREATE TABLE` statement.
+* **Data Preparation:** Before loading, the pandas DataFrame's columns are explicitly reordered to match the SQL table schema.
+* **High-Performance Data Loading:** Data is loaded using PostgreSQL's high-performance **`COPY` command** via `psycopg2`'s `copy_expert` method.
+* **Post-Load Constraint Application:** Constraints (Foreign Keys, `NOT NULL`) are applied *after* the data has been copied.
+* **Comprehensive Data Validation:** The script executes a series of SQL queries (row count, primary key, geospatial outliers, referential integrity) to validate the integrity of the loaded data.
 
 ---
+### Alternative Load: Test/Cloud Database (Neon)
+
+**Script:** `post_offices/scripts/upload_to_test_database.ipynb`
+
+As an alternative to loading into the local database, this script loads the same final dataset into a cloud-hosted PostgreSQL database on **Neon DB**. This is used for testing and staging.
+
+**For a detailed breakdown of this specific (Neon DB) loading process, see the [`Scripts README`](scripts/README.md).**
+
+---
+
 ## Final Database Schema
 
 The final table in the database is defined by the following SQL schema:
