@@ -76,7 +76,7 @@ To improve performance and streamline the analysis, our team decided to implemen
 
 This architectural approach moved heavy data processing from Python into the database, making the final analytical scripts significantly faster and easier to maintain.
 
-➡️ **The SQL scripts I developed for creating these tables, along with a detailed README explaining each script, can beG found in the [`database_scripts/`](database_scripts/) directory.**
+➡️ **The SQL scripts I developed for creating these tables, along with a detailed README explaining each script, can be found in the [`database_scripts/`](database_scripts/) directory.**
 
 ### 3. Tag Taxonomy Design
 
@@ -96,7 +96,7 @@ I developed the core analytical methodology for assigning objective, data-driven
     * **Population Coefficient:** Used for population-dependant services (e.g., healthcare practices, pharmacies, dentists) and per-capita rates (crime).
 
 * **Multi-Layered Tagging Models:** Instead of simple one-to-one rules, I designed and implemented complex logic based on hierarchies and composite scoring:
-    * **Hierarchical Tagging:** Implemented a priority system to assign the *single most descriptive* tag and avoid redundancy. For example, a district only receives the `#public_transport_hub` tag if it qualifies as a hub for **all three** transport types (S-Bahn, U-Bahn, and Bus/Tram), superseding the individual tags.
+    * **Hierarchical Tagging:** Implemented a priority system to assign the *single most descriptive* tag and avoid redundancy. For example, a district only receives the `#public_transport_hub` tag if it qualifies as a hub for **all three** transport types (S-Bahn, U-Bahn, and Bus-Tram), superseding the individual tags.
     * **Composite Tags & Scoring:** Created high-level "summary" tags from multiple underlying criteria. The strongest example is the `#full_spectrum_healthcare` tag, which is only assigned if a district meets 5 distinct criteria (for primary care, specialists, pharmacies, dentists, and hospitals). This model also includes a **hierarchical cleanup**, suppressing the base-level tags (like `#many_pharmacies`) if the top-tier tag is assigned.
 
 * **Automation and Efficiency:** The entire tagging process—from reading pre-aggregated features to applying normalization, hierarchical logic, and cleanup—was automated using a series of dedicated Python scripts (e.g., `script_healthcare.ipynb`, `script_transport_full.ipynb`). These scripts efficiently load the final tags into the central `berlin_labels.district_labels_new` table.
@@ -104,8 +104,7 @@ I developed the core analytical methodology for assigning objective, data-driven
 ➡️ **A detailed, step-by-step breakdown of the implemented logic for each category is available in the [Labels README](labels/README.md).**
 
 
-
 ---
 ## Project Status
 
-This repository serves as a portfolio piece. Please note that direct access to the production database is not provided; a the focus is on demonstrating the methodology and code.
+This repository serves as a portfolio piece. Please note that direct access to the production database is not provided; the focus is on demonstrating the methodology and code.
