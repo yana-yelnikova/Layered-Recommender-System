@@ -8,7 +8,7 @@ For each tag, the description and the main database tables used for its calculat
 ## 📁 Database Overview
 Main district-related tables reviewed:
 
-`banks`, `bike_lanes`, `bus_tram_stops`, `crime_statistics`, `dental_offices`, `district_level_aggregated`, `districts`, `districts_pop_stat`, `doctors`, `gyms`, `hospitals_refactored`, `kindergartens`, `land_prices`, `long_term_listings`, `malls`, `milieuschutz_protection_zones`, `neighborhoods`, `night_clubs`, `parks`, `pharmacies`, `playgrounds`, `pools`, `pools_refactored`, `post_offices`, `regional_statistics`, `rent_stats_per_neighborhood`, `sbahn`, `schools`, `short_term_listings`, `social_clubs_activities`, `supermarkets`, `theaters`, `ubahn`, `universities`, `venues`, `veterinary_clinics`
+`banks`, `bike_lanes`, `bus_tram_stops`, `crime_statistics`, `dental_offices`, `district_level_aggregated`, `districts`, `districts_pop_stat`, `doctors`, `gyms`, `hospitals`, `kindergartens`, `land_prices`, `long_term_listings`, `malls`, `milieuschutz_protection_zones`, `neighborhoods`, `night_clubs`, `parks`, `pharmacies`, `playgrounds`, `pools`, `post_offices`, `regional_statistics`, `rent_stats_per_neighborhood`, `sbahn`, `schools`, `short_term_listings`, `social_clubs_activities`, `supermarkets`,  `theaters`, `ubahn`, `universities`, `venues`, `veterinary_clinics`.
 
 *New tables are under development.*
 
