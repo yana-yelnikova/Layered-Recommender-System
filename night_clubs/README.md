@@ -48,24 +48,50 @@ The pipeline is broken down into four main stages, executed by separate Jupyter 
 ---
 
 ## Project Structure
-```
+```text
 night_clubs/
 ├── scripts/
-│   ├── night_clubs_download.ipynb
-│   ├── night_clubs_data_cleaning.ipynb
-│   ├── night_clubs_data_transformation.ipynb
-│   ├── night_clubs_upload_to_database.ipynb
-│   └── lor_ortsteile.geojson
+│   ├── night_clubs_download.ipynb
+│   ├── night_clubs_data_cleaning.ipynb
+│   ├── night_clubs_data_transformation.ipynb
+│   ├── night_clubs_upload_to_database.ipynb
+│   └── lor_ortsteile.geojson
 │
 ├── clean/
-│   ├── night_clubs_clean.csv
-│   └── night_clubs_clean_with_distr.csv
+│   ├── night_clubs_clean.csv
+│   └── night_clubs_clean_with_distr.csv
 │
 ├── source/
-│   ├── districts.csv
-│   ├── neighborhoods.csv
-│   ├── night_clubs_raw.geojson
-│   ├── night_clubs.csv
-│   └── README.md
+│   ├── districts.csv
+│   ├── neighborhoods.csv
+│   ├── night_clubs_raw.geojson
+│   ├── night_clubs.csv
+│   └── README.md
 │
 └── README.md
+```
+
+---
+
+## Final Database Schema
+
+| Column Name | Key | Data Type | Description | Data Example |
+|---|---|---|---|---|
+| `id` | Primary Key | `VARCHAR(30)` | Unique identifier from OSM (e.g., 'node/12345'). | `way/36908987` |
+| `district_id` | Foreign Key | `VARCHAR(20)` | Identifier for the Berlin district, references `districts`. | `11002002` |
+| `neighborhood_id` | | `VARCHAR(20)` | Identifier for the Berlin neighborhood. | `202` |
+| `club_name` | | `VARCHAR(255)` | The official or common name of the nightclub. | `Gretchen` |
+| `city` | | `VARCHAR(50)` | City name, expected to be 'Berlin'. | `Berlin` |
+| `postcode` | | `VARCHAR(10)` | The 5-digit postal code. | `10963` |
+| `street` | | `VARCHAR(255)` | The name of the street. | `Obentrautstraße` |
+| `house_num` | | `VARCHAR(30)` | The house number. | `19-21` |
+| `phone` | | `VARCHAR(50)` | Contact phone number (merged from sources). | `+49 30 25922702` |
+| `email` | | `VARCHAR(255)` | Contact email address (merged from sources). | `gretchen@gretchen-club.de` |
+| `website` | | `VARCHAR(500)`| Official website URL (merged from sources). | `https://www.gretchen-club.de/` |
+| `opening_hours` | | `VARCHAR(500)`| Opening hours string from OSM. | `Mo 22:00-04:00; Fr-Sa...` |
+| `wheelchair` | | `VARCHAR(30)` | Wheelchair accessibility (e.g., 'yes', 'no', 'limited'). | `yes` |
+| `toilets_wheelchair` | | `VARCHAR(30)` | Wheelchair accessible toilet status. | `no` |
+| `wheelchair_description` | | `VARCHAR(500)`| Text description of accessibility. | `Haben für den Eingang eine...` |
+| `live_music` | | `VARCHAR(30)` | Indicates if the venue features live music. | `None` |
+| `longitude` | | `DECIMAL(9,6)` | The geographic longitude (WGS 84). | `13.387921` |
+| `latitude` | | `DECIMAL(9,6)` | The geographic latitude (WGS 84). | `52.495564` |
