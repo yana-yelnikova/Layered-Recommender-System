@@ -13,10 +13,10 @@ This project outlines the end-to-end pipeline for processing, cleaning, enrichin
 
 > ```text
 > └── post_offices/
+>    ├── README.md
 >     ├── clean/
 >     │   ├── deutschepost_clean.csv
->     │   ├── deutschepost_clean_with_distr.csv
->     │   └── README.md
+>     │   └── deutschepost_clean_with_distr.csv
 >     ├── scripts/
 >     │   ├── convert_and_clean.ipynb
 >     │   ├── post_offices_data_transformation.ipynb
@@ -28,7 +28,8 @@ This project outlines the end-to-end pipeline for processing, cleaning, enrichin
 >         ├── deutschepost_raw.csv
 >         ├── raw_post.json
 >         ├── districts.csv
->         └── neighborhoods.csv
+>         ├── neighborhoods.csv
+>         └── README.md
 > ```
 
 **Folder Descriptions:**
