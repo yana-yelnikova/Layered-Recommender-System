@@ -13,7 +13,8 @@ The pipeline is broken down into four main stages, executed by separate Jupyter 
 * Connects to the Overpass API (using an efficient query with Berlin's Relation ID).
 * Fetches all `amenity=nightclub` objects within the Berlin boundary.
 * Saves the raw JSON response as `source/night_clubs_raw.geojson`.
-
+* **For a detailed breakdown of the data source, fields, and acquisition method, see the [`Data Source README`](source/README.md).**
+  
 ### 2. Clean
 
 **Script:** [`night_clubs_data_cleaning.ipynb`](scripts/night_clubs_data_cleaning.ipynb)
@@ -47,8 +48,6 @@ The pipeline is broken down into four main stages, executed by separate Jupyter 
 ---
 
 ## Project Structure
-
-## Project Structure
 ```
 night_clubs/
 ├── scripts/
@@ -66,6 +65,7 @@ night_clubs/
 │   ├── districts.csv
 │   ├── neighborhoods.csv
 │   ├── night_clubs_raw.geojson
-│   └── night_clubs.csv
+│   ├── night_clubs.csv
+│   └── README.md
 │
 └── README.md
