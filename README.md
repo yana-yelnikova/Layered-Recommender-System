@@ -4,14 +4,37 @@
 
 This project showcases a **real-world, multi-layered recommender system** developed during my internship at **[webeet.io](https://www.webeet.io/)**.
 
-This project is an AI-driven recommender system designed to simplify the complex process of choosing a district to live in Berlin. By leveraging a multi-layered analytical approach, the system translates any user query—from "quiet and family-friendly" to "vibrant nightlife and good transport"—into a personalized, ranked list of suitable districts.
+The system is designed to translate any natural language query (e.g., "a safe area with good transport") into a personalized, ranked list of suitable districts.
 
-This repository serves as a portfolio piece, showcasing the data engineering pipelines and core analytical logic that I was responsible for developing.
+My responsibility was to design and build the **fundamental data platform and analytical engine** that makes this translation possible. I engineered the four core components that power the recommender:
+1.  **ETL Pipelines** to source and process raw data.
+2.  An **Optimized Database Schema** to aggregate analytical features.
+3.  The **Core Tag Taxonomy**, which serves as the central "dictionary" for the entire system.
+4.  A **Data-Driven Tagging Logic** to objectively score and label each district (e.g., assigning `#public_transport_hub` or `#low_crime_rate`).
+
+This taxonomy is the key: it allows the recommender engine (developed by another team) to map a user's abstract query ("safe") to my concrete, data-driven tags (`#low_crime_rate`). It also allows the front-end to display my tag descriptions as tooltips, making the logic transparent to the end-user.
+
+This repository serves as a portfolio piece, showcasing the data engineering pipelines, database architecture, and core analytical logic I developed.
+
+---
+## Technologies Used
+
+* **Languages**: Python, SQL (PostgreSQL)
+* **Libraries**: Pandas, GeoPandas, SQLAlchemy, NumPy
+* **Database**: PostgreSQL with PostGIS extension
+* **Development Environment**: Jupyter Notebook
 
 ---
 ## My Key Contributions
 
-My work focused on four foundational parts of the project: building data pipelines, designing the analytical database schema, creating the tag taxonomy, and developing the tagging logic.
+My work focused on four foundational components of the analytical engine. I was responsible for:
+
+* **End-to-End ETL Pipelines:** Engineering complete ETL pipelines for diverse data sources (JSON APIs, OpenStreetMap).
+* **Database Schema Design:** Designing and implementing the core analytical tables (`attributes`, `features`, `labels`) to optimize query performance.
+* **Core Tag Taxonomy:** Developing the central "dictionary" for the recommender, defining the logic, data sources, and user-facing descriptions for every tag.
+* **Analytical Tagging Logic:** Authoring and automating the complex models (hierarchical, composite) that score districts and assign the final tags.
+
+---
 
 ### 1. Data Engineering: ETL Pipelines & Feature Engineering
 
@@ -39,8 +62,8 @@ Engineered a complex ETL and feature engineering pipeline for Berlin healthcare 
 * Performing advanced cleaning on raw Overpass JSON, including **manual data salvaging** (e.g., from websites), smart deduplication (aggregating specialities), and a 3-tier re-categorization of facilities.
 * Developing a **feature engineering** model to assign a weighted `capacity_score` to facilities and aggregate total healthcare density scores (e.g., `total_primary_adult_score`) for each district.
 * Executing a two-part load:
-    1.  Bulk-inserting cleaned records into `berlin_source_data.doctors`.
-    2.  Integrating the aggregated feature scores into the `berlin_labels.district_features` table using `UPDATE...FROM`.
+    * **Bulk-inserting cleaned records into `berlin_source_data.doctors`.**
+    * **Integrating the aggregated feature scores into the `berlin_labels.district_features` table using `UPDATE...FROM`.**
 
 ➡️ **For a detailed breakdown of this pipeline, see the [Doctors README](doctors/README.md).**
 
@@ -53,7 +76,7 @@ To improve performance and streamline the analysis, our team decided to implemen
 
 This architectural approach moved heavy data processing from Python into the database, making the final analytical scripts significantly faster and easier to maintain.
 
-➡️ **The SQL scripts I developed for creating these tables, along with a detailed README explaining each script, can be found in the [`database_scripts/`](database_scripts/) directory.**
+➡️ **The SQL scripts I developed for creating these tables, along with a detailed README explaining each script, can beG found in the [`database_scripts/`](database_scripts/) directory.**
 
 ### 3. Tag Taxonomy Design
 
@@ -80,15 +103,9 @@ I developed the core analytical methodology for assigning objective, data-driven
 
 ➡️ **A detailed, step-by-step breakdown of the implemented logic for each category is available in the [Labels README](labels/README.md).**
 
----
-## Technologies Used
 
-* **Languages**: Python, SQL (PostgreSQL)
-* **Libraries**: Pandas, GeoPandas, SQLAlchemy, NumPy
-* **Database**: PostgreSQL with PostGIS extension
-* **Development Environment**: Jupyter Notebook
 
 ---
 ## Project Status
 
-This repository serves as a portfolio piece. Please note that direct access to the production database is not provided; the focus is on demonstrating the methodology and code.
+This repository serves as a portfolio piece. Please note that direct access to the production database is not provided; a the focus is on demonstrating the methodology and code.
