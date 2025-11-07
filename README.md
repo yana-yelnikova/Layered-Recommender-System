@@ -35,7 +35,18 @@ My work focused on four foundational components of the analytical engine. I was 
 * **Analytical & Clustering Logic:** Leading a data analysis team to develop the hierarchical and clustering logic (in Python & SQL) that assigns objective labels to each district.
 
 ---
+## 🏛️ Project Architecture & Data Flow
 
+To visualize the project's data flow and component dependencies, I designed the following architectural diagram. It connects the ETL pipelines (Section 1), the database schema (Section 2), and the analytical logic (Section 4).
+
+The legend (bottom left) differentiates between implemented components (black/green) and components designed for future implementation (red/blue).
+
+*Click the image to open the full-resolution, interactive diagram in Excalidraw.*
+
+
+  [![Project Architecture Diagram](docs/images/project_architecture.png)](https://excalidraw.com/#json=TOO3k6wyogcevSWp1mYsP,9KDj_jaYwo46KWO-hq5rZA)
+
+---
 ### 1. Data Engineering: ETL Pipelines & Feature Engineering
 
 #### 1.1 End-to-End ETL Pipeline (Post Offices)
