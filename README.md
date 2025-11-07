@@ -37,7 +37,7 @@ My work focused on four foundational components of the analytical engine. I was 
 ---
 ## 🏛️ Project Architecture & Data Flow
 
-To visualize the project's data flow and component dependencies, I designed the following architectural diagram. It connects the ETL pipelines (Section 1), the database schema (Section 2), and the analytical logic (Section 4).
+To visualize the project's data flow and component dependencies, **I designed the following architectural diagram.** It connects the ETL pipelines (Section 1), the database schema (Section 2), the Tag Taxonomy (Section 3), and the analytical logic (Section 4).
 
 The legend (bottom left) differentiates between implemented components (black/green) and components designed for future implementation (red/blue).
 
