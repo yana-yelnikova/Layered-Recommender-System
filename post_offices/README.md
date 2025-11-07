@@ -7,13 +7,16 @@ This project outlines the end-to-end pipeline for processing, cleaning, enrichin
 - **Geospatial Data:** `lor_ortsteile.geojson` (Contains Berlin's neighborhood polygons, used for spatial joins).
 - **Lookup Tables:** `districts.csv` and `neighborhoods.csv` (Reference tables, exported from the database, containing names and unique IDs for Berlin's districts and neighborhoods).
 
+**For a detailed breakdown of the `raw_post.json` data source, fields, and acquisition method, see the [`Data Source README`](sources/README.md).**
+
 ## Project Structure
 
 > ```text
 > └── post_offices/
 >     ├── clean/
 >     │   ├── deutschepost_clean.csv
->     │   └── deutschepost_clean_with_distr.csv
+>     │   ├── deutschepost_clean_with_distr.csv
+>     │   └── README.md
 >     ├── scripts/
 >     │   ├── convert_and_clean.ipynb
 >     │   ├── post_offices_data_transformation.ipynb
