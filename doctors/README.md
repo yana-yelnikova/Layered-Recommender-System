@@ -102,4 +102,30 @@ This is the most complex stage, involving parsing, cleaning, and manual enrichme
 │   ├── doctors_and_clinics_raw.geojson
 │   └── README.md
 │
-└── README.md 
+└── README.md
+```
+
+## Final Database Schema
+
+The final table in the database is defined by the following SQL schema:
+| Column Name | Key | Data Type | Description | Data Example |
+|---|---|---|---|---|
+| `id` | Primary Key | `VARCHAR(30)` | Unique identifier from OSM. | `7823742547` |
+| `district_id` | Foreign Key | `VARCHAR(20)` | Identifier for the Berlin district, references `districts`. | `11001001` |
+| `neighborhood_id` | | `VARCHAR(20)` | Identifier for the Berlin neighborhood. | `101` |
+| `name` | | `VARCHAR(255)` | The official name of the practice or clinic. | `A-Arbeitsmedizin` |
+| `street` | | `VARCHAR(255)` | The name of the street. | `Schwartzkopffstraße` |
+| `housenumber` | | `VARCHAR(30)` | The house number. | `15` |
+| `city` | | `VARCHAR(50)` | City name, expected to be 'Berlin'. | `Berlin` |
+| `postcode` | | `VARCHAR(10)` | The 5-digit postal code. | `10115` |
+| `amenity` | | `VARCHAR(30)` | Categorized facility type (e.g., 'practice', 'clinic'). | `practice` |
+| `speciality` | | `TEXT` | Medical specialty (can be a comma-separated list). | `urology` |
+| `opening_hours` | | `VARCHAR(500)`| Opening hours string from OSM. | `Mo-Fr 07:30-22:00; Sa 09:00-17:00` |
+| `website` | | `VARCHAR(500)`| Official website URL (merged). | `https://www.al-urologie.de/` |
+| `longitude` | | `DECIMAL(9,6)` | The geographic longitude (WGS 84). | `13.379949` |
+| `latitude` | | `DECIMAL(9,6)` | The geographic latitude (WGS 84). | `52.535000` |
+| `wheelchair` | | `VARCHAR(30)` | Wheelchair accessibility (e.g., 'yes', 'no'). | `yes` |
+| `description` | | `TEXT` | Additional text description. | `Substitution und Psychosoziale Betreuung (PSB)` |
+| `email` | | `VARCHAR(255)` | Contact email address (merged). | `info@a-arbeitsmedizin.de` |
+| `toilets_wheelchair` | | `VARCHAR(30)` | Wheelchair accessible toilet status. | `None` |
+| `wheelchair_description` | | `TEXT` | Text description of accessibility. | `None` |
