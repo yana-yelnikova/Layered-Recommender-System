@@ -1,4 +1,5 @@
-## Detailed Tagging Logic
+# Detailed Tagging Logic
+
 ### 1. Transport Hub Tagging Logic
 
 All tags discussed in this section (`#public_transport_hub`, `#bus_tram_hub`, `#uban_hub`, `#sbahn_hub`) are part of the **Mobility & Accessibility** category. A hierarchical logic was established to identify and assign these tags based on the quality of a district's public transport infrastructure.
@@ -6,13 +7,11 @@ All tags discussed in this section (`#public_transport_hub`, `#bus_tram_hub`, `#
 * **Hub Identification Rule**: A district is considered a "hub" for a specific transport type if its total number of stops/stations exceeds a dynamically scaled threshold. The rule is:
     **`Actual Count > (Average Count × Area Coefficient)`**
 
-* **Tagging Hierarchy**: To avoid redundancy, the following hierarchy is applied, assigning only the highest-ranking tag a district qualifies for:
-    * **`#public_transport_hub`**: Assigned only if a district meets the hub criteria for **all three** main transport types: Bus/Tram **AND** U-Bahn **AND** S-Bahn.
-    * **`#bus_tram_hub`**: Assigned if a district is a hub **only** for Bus/Tram.
-    * **`#uban_hub`**: Assigned if a district is a hub **only** for U-Bahn.
-    * **`#sbahn_hub`**: Assigned if a district is a hub **only** for S-Bahn.
+* **Tagging Hierarchy**: To provide the most accurate profile while avoiding redundancy, the following hierarchy is applied:
+    * **`#public_transport_hub` (Top-Tier)**: Assigned only if a district meets the hub criteria for **all three** main transport types: Bus/Tram **AND** U-Bahn **AND** S-Bahn.
+    * **`#bus_tram_hub` / `#uban_hub` / `#sbahn_hub` (Base Tags)**: Assigned if a district meets the hub criteria for that specific transport type. These tags **can be combined** (e.g., a district can have both `#uban_hub` and `#sbahn_hub`). However, if `#public_transport_hub` is assigned, these base tags are suppressed.
 
-* **Current Implementation Status**: The script at `script_transport_full.ipynb` now fully implements the hub identification rule and the final tagging hierarchy for all four tags. The resulting tags are formatted and appended to the central **`berlin_labels.district_labels_new`** table.
+* **Current Implementation Status**: The script at `script_transport_full.ipynb` now fully implements the hub identification rule and the final tagging hierarchy. The resulting tags are formatted and appended to the central **`berlin_labels.district_labels_new`** table.
 
 ### 2. Accessibility Tagging Logic
 
@@ -25,7 +24,7 @@ This logic evaluates the convenience of a district for everyday life based on a 
     * **`#highly_convenient` (Score: 3)**: Assigned to districts that score 3/3 on core amenities but are **not** mall hubs.
     * **`#daily_convenience` (Score: 2)**: Assigned to districts that score 2/3 on core amenities.
 
-**Current Implementation Status**: The script at `script_accesebility_full.ipynb` fully implements this logic. The resulting tags are formatted and appended to the central **`berlin_labels.district_labels_new`** table.
+**Current Implementation Status**: The script at `script_accessibility_full.ipynb` fully implements this logic. The resulting tags are formatted and appended to the central **`berlin_labels.district_labels_new`** table.
 
 ### 3. Shopping Destination Tag Logic
 
@@ -36,11 +35,11 @@ This is an **independent tag** designed to specifically identify major shopping 
 
 * **Tag Assignment**: If the condition is met, the district receives the **`#shopping_destination`** tag. This tag can be assigned in addition to any other amenity tags a district may have.
 
-**Current Implementation Status**: The script at `script_accesebility_full.ipynb` fully implements this logic. The resulting tag is formatted and appended to the central **`berlin_labels.district_labels_new`** table.
+**Current Implementation Status**: The script at `script_accessibility_full.ipynb` fully implements this logic. The resulting tag is formatted and appended to the central **`berlin_labels.district_labels_new`** table.
 
 ### 4. Healthcare Tagging Logic
 
-This logic evaluates the availability and density of healthcare facilities within the `Amenities & Services` category using a multi-layered, hierarchical approach. 
+This logic evaluates the availability and density of healthcare facilities within the `Amenities & Services` category using a multi-layered, hierarchical approach.
 
 * **Normalization**: Density calculations use the **Area Coefficient** for facilities serving a wide area (Hospitals) and the **Population Coefficient** for services tied to local demand (Practices, Pharmacies, Dentists) to ensure fair comparisons.
 
@@ -54,14 +53,13 @@ This logic evaluates the availability and density of healthcare facilities withi
     * `#sunday_pharmacy_access`: An independent tag assigned if `Count of pharmacies open on Sunday > 0`.
 
 * **Composite Tag Logic (Tier 2 and Tier 3)**: Higher-level tags consolidate the base tags, and a strict hierarchical cleanup is applied to simplify the final output.
-
     * **Tier 2: `#core_primary_care_hub`**: Indicates high density in both Adult Primary Care and Pediatric Care. **Condition:** Requires `#strong_primary_adult_care` AND `#strong_pediatric_care`.
     * **Tier 3: `#full_spectrum_healthcare` (Top-Tier)**: Indicates a district meets criteria for all five key healthcare pillars (Practices, Specialists, Pharmacies, Dentists, and Hospitals). **Condition:** Requires `#core_primary_care_hub` AND `#specialist_hub` AND `#many_pharmacies` AND `#many_dental_clinics` AND `#high_hospital_density`.
 
 * **Hierarchical Cleanup Rule**: If a higher-level composite tag is assigned, all component tags used to calculate it are suppressed (`FALSE`) in the final output.
     * If `#core_primary_care_hub` is assigned, `#strong_primary_adult_care` and `#strong_pediatric_care` are suppressed.
     * If `#full_spectrum_healthcare` is assigned, all component tags (Tier 1 and Tier 2) are suppressed.
- 
+    
 **Current Implementation Status**: The script at `script_healthcare.ipynb` fully implements this logic. The resulting tag is formatted and appended to the central **`berlin_labels.district_labels_new`** table.
 
 ### 5. Crime Rate Tagging Logic
