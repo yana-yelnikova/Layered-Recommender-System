@@ -14,7 +14,7 @@ My responsibility was to design and build the **fundamental data platform and an
 
 This taxonomy is the key: it allows the recommender engine (developed by another team) to map a user's abstract query ("safe") to my concrete, data-driven tags (`#low_crime_rate`). It also allows the front-end to display my tag descriptions as tooltips, making the logic transparent to the end-user.
 
-This repository serves as a portfolio piece, showcasing the data engineering pipelines, database architecture, and core analytical logic I developed.
+This repository serves as a portfolio piece, showcasing the **data architecture I oversaw**, the **scalable ETL pipelines I engineered**, and the **core analytical and clustering logic** my team developed.
 
 ---
 ## Technologies Used
@@ -29,10 +29,10 @@ This repository serves as a portfolio piece, showcasing the data engineering pip
 
 My work focused on four foundational components of the analytical engine. I was responsible for:
 
-* **End-to-End ETL Pipelines:** Engineering complete ETL pipelines for diverse data sources (JSON APIs, OpenStreetMap).
-* **Database Schema Design:** Designing and implementing the core analytical tables (`attributes`, `features`, `labels`) to optimize query performance.
-* **Core Tag Taxonomy:** Developing the central "dictionary" for the recommender, defining the logic, data sources, and user-facing descriptions for every tag.
-* **Analytical Tagging Logic:** Authoring and automating the complex models (hierarchical, composite) that score districts and assign the final tags.
+* **Scalable ETL Pipelines:** Designing and implementing scalable ETL pipelines in Python for large-scale web scraping, geocoding, and loading structured data into a production database.
+* **Data Architecture & Design:** Overseeing the project's data architecture, database design (ERD), and ensuring data integrity, consistency, and quality across all analytical pipelines.
+* **Core Tag Taxonomy:** Developing the central "dictionary" (taxonomy) that defines all labels used by the recommender system to enhance personalization.
+* **Analytical & Clustering Logic:** Leading a data analysis team to develop the hierarchical and clustering logic (in Python & SQL) that assigns objective labels to each district.
 
 ---
 
