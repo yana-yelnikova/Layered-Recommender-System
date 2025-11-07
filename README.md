@@ -66,15 +66,17 @@ The focus of the design was to ensure each tag is **objective, data-driven, and 
 
 ### 4. Data-Driven Tagging Logic
 
-I developed the core analytical methodology for assigning the objective, data-driven tags defined in the taxonomy. My approach was focused on creating a robust, transparent, and automated system. The key pillars of this methodology are:
+I developed the core analytical methodology for assigning objective, data-driven tags to each district. My approach was focused on creating a robust, transparent, and scalable system that fairly compares diverse areas. The key pillars of this methodology are:
 
-* **Normalization for Fair Comparisons:** I implemented a system using **Area and Population Coefficients** to create scaled thresholds, ensuring that districts of different sizes are compared fairly.
+* **Strategic Normalization:** To ensure fair comparisons, thresholds were dynamically scaled using two different metrics:
+    * **Area Coefficient:** Used for infrastructure density (e.g., transport hubs, nightlife venues).
+    * **Population Coefficient:** Used for population-dependant services (e.g., healthcare practices, pharmacies, dentists) and per-capita rates (crime).
 
-* **Advanced Tagging Models:** Instead of simple one-to-one rules, I designed and implemented more complex logic, including:
-    * **Hierarchical Tagging** (e.g., for the `Mobility` category) to assign the single most accurate tag and avoid redundancy.
-    * **Scoring Systems and Composite Tags** (e.g., for `Amenities & Services`) to create nuanced, high-level tags like `#commercial_hotspot` based on multiple underlying criteria.
+* **Multi-Layered Tagging Models:** Instead of simple one-to-one rules, I designed and implemented complex logic based on hierarchies and composite scoring:
+    * **Hierarchical Tagging:** Implemented a priority system to assign the *single most descriptive* tag and avoid redundancy. For example, a district only receives the `#public_transport_hub` tag if it qualifies as a hub for **all three** transport types (S-Bahn, U-Bahn, and Bus/Tram), superseding the individual tags.
+    * **Composite Tags & Scoring:** Created high-level "summary" tags from multiple underlying criteria. The strongest example is the `#full_spectrum_healthcare` tag, which is only assigned if a district meets 5 distinct criteria (for primary care, specialists, pharmacies, dentists, and hospitals). This model also includes a **hierarchical cleanup**, suppressing the base-level tags (like `#many_pharmacies`) if the top-tier tag is assigned.
 
-* **Automation and Efficiency:** I automated the entire process using Python scripts. These scripts efficiently read pre-aggregated data from the central database tables, apply the defined logic, and upload the final tags to the `district_labels_new` table.
+* **Automation and Efficiency:** The entire tagging process—from reading pre-aggregated features to applying normalization, hierarchical logic, and cleanup—was automated using a series of dedicated Python scripts (e.g., `script_healthcare.ipynb`, `script_transport_full.ipynb`). These scripts efficiently load the final tags into the central `berlin_labels.district_labels_new` table.
 
 ➡️ **A detailed, step-by-step breakdown of the implemented logic for each category is available in the [Labels README](labels/README.md).**
 
