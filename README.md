@@ -13,14 +13,36 @@ This repository serves as a portfolio piece, showcasing the data engineering pip
 
 My work focused on four foundational parts of the project: building data pipelines, designing the analytical database schema, creating the tag taxonomy, and developing the tagging logic.
 
-### 1. End-to-End ETL Pipeline Development
+### 1. Data Engineering: ETL Pipelines & Feature Engineering
 
-I designed and implemented a complete ETL (Extract, Transform, Load) pipeline for processing Berlin post office data. The process involved:
-* Extracting and cleaning raw JSON data.
+#### 1.1 End-to-End ETL Pipeline (Post Offices)
+
+I designed and implemented a complete ETL (Extract, Transform, Load) pipeline to process Berlin post office data, sourced from a JSON API response captured from the official `Deutsche Post` website. The process involved:
+* Extracting and cleaning the complex, nested raw JSON data (e.g., parsing opening hours).
 * Enriching it with geospatial information (district and neighborhood IDs) using **GeoPandas**.
 * Loading the final, structured data into a PostgreSQL database, ensuring data integrity with foreign keys.
 
 ➡️ **For a detailed breakdown of this pipeline, see the [Post Offices README](post_offices/README.md).**
+
+#### 1.2 Open Data ETL Pipeline (Nightclubs)
+
+Developed an ETL pipeline to source, clean, and load Berlin nightclub data from OpenStreetMap (OSM). The process included:
+* Extracting raw data using the **Overpass API** and performing initial cleaning (flattening JSON, merging columns).
+* Enriching the data with geocoding (using **geopy**) and performing a spatial join (**GeoPandas**) to add `district_id` and `neighborhood_id`.
+* Loading the structured data into PostgreSQL using the high-performance `copy_expert` method and adding foreign key constraints.
+
+➡️ **For a detailed breakdown of this pipeline, see the [Nightclubs README](night_clubs/README.md).**
+
+#### 1.3 Advanced ETL & Feature Engineering (Doctors & Clinics)
+
+Engineered a complex ETL and feature engineering pipeline for Berlin healthcare facilities (doctors and clinics) from OSM. This pipeline involved:
+* Performing advanced cleaning on raw Overpass JSON, including **manual data salvaging** (e.g., from websites), smart deduplication (aggregating specialities), and a 3-tier re-categorization of facilities.
+* Developing a **feature engineering** model to assign a weighted `capacity_score` to facilities and aggregate total healthcare density scores (e.g., `total_primary_adult_score`) for each district.
+* Executing a two-part load:
+    1.  Bulk-inserting cleaned records into `berlin_source_data.doctors`.
+    2.  Integrating the aggregated feature scores into the `berlin_labels.district_features` table using `UPDATE...FROM`.
+
+➡️ **For a detailed breakdown of this pipeline, see the [Doctors README](doctors/README.md).**
 
 ### 2. Database Schema Design & Optimization
 
