@@ -20,9 +20,10 @@ This repository serves as a portfolio piece, showcasing the **data architecture 
 ## Technologies Used
 
 * **Languages**: Python, SQL (PostgreSQL)
-* **Libraries**: Pandas, GeoPandas, SQLAlchemy, NumPy
-* **Database**: PostgreSQL with PostGIS extension
-* **Development Environment**: Jupyter Notebook
+* **Core Libraries**: Pandas, GeoPandas, SQLAlchemy, NumPy, geopy, psycopg2
+* **Database Platform**: PostgreSQL with PostGIS extension (Tested on Neon DB Cloud Environment)
+* **Development Environment**: VS Code, DBeaver (SQL Client), Jupyter Notebook
+* **Version Control**: GitHub
 
 ---
 ## My Key Contributions
